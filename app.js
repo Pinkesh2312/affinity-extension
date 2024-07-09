@@ -7,7 +7,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Simulated createAffinityEntry function
-async function createAffinityEntry(linkedinUrl,dealowner,relationship,isoutbound) {
+async function createAffinityEntry(linkedinUrl,dealowner, funnel, priority,isoutbound) {
   // Replace this with your actual implementation
   // You can make API calls, process data, and perform necessary actions here
   
@@ -45,7 +45,7 @@ async function createAffinityEntry(linkedinUrl,dealowner,relationship,isoutbound
 
     // Send POST request to create list entry
     const listEntryResponse = await axios.post(
-      "https://api.affinity.co/lists/249971/list-entries",
+      "https://api.affinity.co/lists/116594/list-entries",
       {
         entity_id: organizationId,
       },
@@ -53,36 +53,61 @@ async function createAffinityEntry(linkedinUrl,dealowner,relationship,isoutbound
     );
 
     console.log("List entry created successfully:", listEntryResponse.data);
-    const addrelationship= await axios.post(
-        "https://api.affinity.co/field-values",
-        {
-            field_id:"1709204",
-            entity_id:organizationId,
-            list_entry_id:listEntryResponse.data.id,
-            value:relationship
-        },
-        authconfig
-      );
+    // const addrelationship= await axios.post(
+    //     "https://api.affinity.co/field-values",
+    //     {
+    //         field_id:"3488053",
+    //         entity_id:organizationId,
+    //         list_entry_id:listEntryResponse.data.id,
+    //         value:relationship
+    //     },
+    //     authconfig
+    //   );
+
     const addowner= await axios.post(
         "https://api.affinity.co/field-values",
         {
-            field_id:"1709204",
+            field_id:"4543463",
             entity_id:organizationId,
             list_entry_id:listEntryResponse.data.id,
             value:dealowner
         },
         authconfig
       );
-      const addoutbound= await axios.post(
+
+      const addfunnel= await axios.post(
         "https://api.affinity.co/field-values",
         {
-            field_id:"1709204",
+            field_id:"4543453",
             entity_id:organizationId,
             list_entry_id:listEntryResponse.data.id,
-            value:isoutbound
+            value:funnel
         },
         authconfig
       );
+
+      const addpriority= await axios.post(
+        "https://api.affinity.co/field-values",
+        {
+            field_id:"4543450",
+            entity_id:organizationId,
+            list_entry_id:listEntryResponse.data.id,
+            value:priority
+        },
+        authconfig
+      );
+
+
+      // const addoutbound= await axios.post(
+      //   "https://api.affinity.co/field-values",
+      //   {
+      //       field_id:"3488055",
+      //       entity_id:organizationId,
+      //       list_entry_id:listEntryResponse.data.id,
+      //       value:isoutbound
+      //   },
+      //   authconfig
+      // );
 
     const addnote = await axios.post(
       "https://api.affinity.co/notes",
@@ -136,12 +161,14 @@ app.post("/affinityexten", async (req, res) => {
   const linkedinUrl = req.body.linkedinUrl;
   console.log(linkedinUrl)
   const dealowner = req.body.selectedDealOwner;
-  const relationship=req.body.selectedRelationship;
-  const isoutbound=req.body.isOutbound
-  console.log(isoutbound)
+  // const relationship=req.body.selectedRelationship;
+  const funnel = req.body.selectedFunnel;
+  const priority = req.body.selectedPriority;
+  // const isoutbound=req.body.isOutbound
+  // console.log(isoutbound)
 
   try {
-    const result = await createAffinityEntry(linkedinUrl,dealowner,relationship,isoutbound);
+    const result = await createAffinityEntry(linkedinUrl,dealowner,funnel,priority);
     res.json({ result: result });
   } catch (error) {
     res.status(500).json({ result: "error", errorMessage: error.message });
