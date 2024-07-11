@@ -11,7 +11,7 @@ async function createAffinityEntry(linkedinUrl,dealowner, funnel, priority,isout
   // Replace this with your actual implementation
   // You can make API calls, process data, and perform necessary actions here
   
-  const authToken = "ExUhFXWXKgtz9tZ964u65VuOndsDO_6WQ_6mg_gIgkA";
+  const authToken = "HZ_-0KPGIwLM6kNctmCS9s5QSjHQmATRmf03FzmuqkA";
   const authconfig = {
     auth: {
       username: "",
@@ -45,7 +45,7 @@ async function createAffinityEntry(linkedinUrl,dealowner, funnel, priority,isout
 
     // Send POST request to create list entry
     const listEntryResponse = await axios.post(
-      "https://api.affinity.co/lists/116594/list-entries",
+      "https://api.affinity.co/lists/249971/list-entries",
       {
         entity_id: organizationId,
       },
@@ -127,7 +127,7 @@ async function createAffinityEntry(linkedinUrl,dealowner, funnel, priority,isout
   }
 }
 async function checkForDuplication(username) {
-    const authToken = "3oZ_xxk61ap0078nVVE6Ok6e9Vec8pDQ4sMbnIvZ-Jc";
+    const authToken = "HZ_-0KPGIwLM6kNctmCS9s5QSjHQmATRmf03FzmuqkA";
     const authconfig = {
       auth: {
         username: "",
@@ -138,7 +138,7 @@ async function checkForDuplication(username) {
     try {
       // Send GET request to retrieve list entries
       const listEntriesResponse = await axios.get(
-        "https://api.affinity.co/lists/116594/list-entries",
+        "https://api.affinity.co/lists/249971/list-entries",
         authconfig
       );
   
@@ -179,6 +179,5 @@ const PORT = process.env.PORT || 4040;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
-
 
   
